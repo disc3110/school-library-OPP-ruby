@@ -14,6 +14,10 @@ To get a local copy up and running follow these simple example steps.
 ### Install
 - `git clone` the repo `git@github.com:disc3110/school-library-OPP-ruby.git`
 
+## Usage
+- go to the bin folder `cd school-library-OPP-ruby.git/bin`
+- run the main program `ruby main.rb`
+
 ## Authors
 
 🧑‍💻 **Diego**
