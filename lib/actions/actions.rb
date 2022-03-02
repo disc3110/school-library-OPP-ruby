@@ -1,13 +1,13 @@
-require_relative '../book.rb'
-require_relative '../classroom.rb'
-require_relative '../corrector.rb'
-require_relative '../person.rb'
-require_relative '../rental.rb'
-require_relative '../student.rb'
-require_relative '../teacher.rb'
+require_relative '../book'
+require_relative '../classroom'
+require_relative '../corrector'
+require_relative '../person'
+require_relative '../rental'
+require_relative '../student'
+require_relative '../teacher'
 
 class Actions
-attr_accessor :keep_going, :book_colection, :people
+  attr_accessor :keep_going, :book_colection, :people
 
   def initialize()
     @keep_going = true
@@ -17,16 +17,16 @@ attr_accessor :keep_going, :book_colection, :people
   end
 
   def list_books
-    @book_colection.each {|x| puts "Title: #{x.title}  Author: #{x.author}"}
+    @book_colection.each { |x| puts "Title: #{x.title}  Author: #{x.author}" }
   end
-  
+
   def list_people
-    @people.each {|x| puts " [#{x.class}] Name: #{x.name}, ID #{x.id}, Age: #{x.age}"}
+    @people.each { |x| puts " [#{x.class}] Name: #{x.name}, ID #{x.id}, Age: #{x.age}" }
   end
-  
+
   def create_person()
     p('Do you want to create a student(1) or a teacher(2) [INPUT THE NUMBER]')
-      p_role = gets.chomp
+    p_role = gets.chomp
     p('Whats the name of the person?')
     @p_name = gets.chomp
     p('Whats the age of the person?')
@@ -42,21 +42,22 @@ attr_accessor :keep_going, :book_colection, :people
       p('Invalid')
     end
   end
-  
+
   def create_student()
-    newperson = Student.new(@p_age, @p_name, @p_permission)
+    newperson = Student.new(age: @p_age, name: @p_name, parent_permission: @p_permission)
     @people.push(newperson)
     puts "#{newperson.name} has been created"
   end
-  
+
   def create_teacher()
     p('What specialization does he/she has?')
     specialization = gets.chomp
-    newperson = Teacher.new(@p_age, @p_name, @p_permission, specialization)
+    newperson = Teacher.new(age: @p_age, name: @p_name, parent_permission: @p_permission,
+                            specialization: specialization)
     @people.push(newperson)
     puts "#{newperson.name} has been created"
   end
-  
+
   def create_book
     p('Whats the title of the book?')
     newtitle = gets.chomp
@@ -66,9 +67,9 @@ attr_accessor :keep_going, :book_colection, :people
     @book_colection.push(newbook)
     puts 'Your book has been created'
   end
-  
+
   def create_rental
-    if @book_colection.length > 0 && @people.length > 0
+    if @book_colection.length.positive? && @people.length.positive?
       p('Select a book of the following list of books')
       @book_colection.each_with_index do |book, idx|
         puts "#{idx + 1}) Title: \"#{book.title}\", Author: #{book.author}"
@@ -84,14 +85,14 @@ attr_accessor :keep_going, :book_colection, :people
       print 'Date:'
       date = gets.chomp
 
-      new_rental = Rental.new(date, @book_colection[book_idx], @people[person_idx] )
+      new_rental = Rental.new(date, @book_colection[book_idx], @people[person_idx])
       @rentals.push(new_rental)
       p('Rental created successfully')
     else
-    p('You dont have enough data to create a rental please add books and people')
+      p('You dont have enough data to create a rental please add books and people')
     end
   end
-  
+
   def list_rentals
     print 'ID of person:'
     id = gets.chomp.to_i

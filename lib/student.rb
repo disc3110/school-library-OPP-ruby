@@ -1,10 +1,10 @@
 class Student < Person
   attr_reader :classroom
 
-  def initialize(age, name = 'Unknow', parent_permission = true, classroom = nil)
+  def initialize(classroom: nil, **args)
     @classroom = classroom
     classroom.add_student(self) if classroom && !classroom.students.include?(self)
-    super(age, name, parent_permission)
+    super(**args)
   end
 
   def classroom=(classroom)
